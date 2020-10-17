@@ -5,42 +5,64 @@
 library(tidyverse)
 
 
+# Read Butterflies data:
+Butterflies <- read.csv("~/DataProject/Misk-Amal-2020/Butterflies.csv") 
+
+# Butterflies Data:
+Butterflies <- c(Milbert = 300, Zebra = 45, Monarch = 200, Julia = 80)
+wingspan <- c(4.2, 5, 8.6, 4)
+
+
+# Examine the data:
+str(Butterflies)
+summary(Butterflies)
+
 # In a Garden I saw 4 spices of butterflies, which were:
 # 1- Milbert:
 Milbert <- 300
 
-# the wingspan:
+# the wingspan of this spices is:
 Milbert_wingspan <- 4.2
 
 
-# 2- Zebra:
+# And a Zebra:
 Zebra <- 45
 
-# the wingspan:
+# And the wingspan of this spices is:
 Zebra_wingspan <- 5
 
-# 3- Monarch
+# And Monarch
 Monarch <- 200
 
-# the wingspan:
+# the wingspan of this spices is:
 Monarch_wingspan <- 8.6 
 
-# 4- Julia:
+# And Julia:
 Julia <- 80
 
-# the wingspan:
+# And the wingspan of this spices is:
 Julia_wingspan <- 4
 
 
-c("Milbert", "Zebra", "Monarch", "Julia")
-Butterflies <- c(Milbert, Zebra, Monarch, Julia)
-Numbers <- c(300, 45, 200, 80)
-wingspan <- c(4.2, 5, 8.6, 4)
+
+# I collected a sample of the butterflies:
+# Noticed that in Site I, Milbert and Monarch are equal in number:
 
 
 
-Butterflies <- c(Milbert = 300, Zebra = 45, Monarch = 200, Julia = 80)
+# The mean of the wingspan in both sites is:
+mean(wingspan)
 
 
-Butterflies
-wingspan
+ 
+# Descriptive statistics 
+
+
+
+Butterflies %>% 
+  slice_max(rate, n = 1)
+
+
+# Summary 
+Butterflies %>% 
+  filter(origin) 

@@ -1,15 +1,16 @@
 # Irrigation analysis
 # Amal Almutairy
 # 03.10.2020
-# Small case study using irrigation_wide.csv in the dataframe
+# Small case study using irrigation_wide in the data frame 
 
 library(tidyverse)
-library(rio)
+
 
 # begin with wide "messy" format:
-irrigation <- read.csv("irrigation_wide.csv") 
-irrigation <- read.csv("irrigation_long.csv") 
-PlayData <- read.csv("irrigation_wide.csv")
+irrigation <- read.csv("~/DataProject/Misk-Amal-2020/irrigation_wide.csv") 
+
+
+
 
 # Examine the data:
  str(irrigation)
@@ -18,29 +19,33 @@ PlayData <- read.csv("irrigation_wide.csv")
  
  
 # In 2007 what the total area under irrigation?
+ irrigation %>% 
+   filter(year == 2007) %>% 
+ select(`N..America`,`S..America`) %>% 
+   sum()
+ 
  
 #for only the Americas
- 
- irrigation %>% 
+irrigation %>% 
    filter(year == 2007) %>% 
    select(ends_with("erica"))
 
  
- # Summary 
-irrigation %>% 
-   filter(year == 2007) %>% 
+# Summary 
+irrigation_wide %>% 
+   filter(year == 2007) + 
    select(`N. America`,`S. America`) %>% 
-   sum()
+   summary()
 
 # Tidy Data
 irrigation_t <- irrigation %>%
   pivot_longer(-year, names_to = "region", values_to = "value")
-  irrigation_t
+  irrigation
 
 # What is the total under irrigation each year?
 #which 2 region increased most from 1980 to 2007:
 # arrange from highest to lowest use "_"
-  irrigation_t %>%
+  irrigation %>%
   group_by(region) %>% 
   summarise(diff = value[year == 2007] - value[year == 1980]) %>% 
   arrange(-diff) %>% 
@@ -49,21 +54,17 @@ irrigation_t <- irrigation %>%
 
 
 
-
-
-
 # other way
 # slice_max(diff, n=2)
-
-  irrigation_t <- irrigation_t %>%
-    arrange(region) %>% 
+irrigation <- irrigation %>%
+    arrange(., region) %>% 
     group_by(region) %>% 
     summarise(diff = value[year == 1980] / value[year == 2007]) %>% 
     slice_max(diff, n = 2)
   
 
 # standardizes area against 1980(relative change over 1980)
-irrigation_t %>% 
+ irrigation %>% 
   group_by(year) %>% 
 mutate(total_ = sum(value)) %>% 
   select(year, total_) %>% 
@@ -71,7 +72,7 @@ mutate(total_ = sum(value)) %>%
 
 
 # our use top_n()
-irrigation_t <- irrigation_t %>%
+irrigation <- irrigation %>%
   arrange(region) 
   group_by(region) %>% 
   summarise(diff = value[year == 1980] / value[year == 2007]) %>% 
@@ -84,7 +85,7 @@ diff(xx)/xx[-lenght(xx)]
 
 # There are the absolute differences
 # How about the proportional?
-irrigation_t <- irrigation_t %>%
+irrigation <- irrigation %>%
   arrange(region) %>% 
   group_by(region) %>% 
   summarise(diff = value[year == 1980] / value[year == 2007]) %>% 
@@ -122,3 +123,23 @@ diff(xx)/xx[-length(xx)]
 
   
 # plot area over time for each region?
+# plot it:
+
+
+
+
+# Keep all values:
+irrigation %>%
+  group_by(year) %>% 
+  mutate(total_ = sum(value))
+select(year, total_) %>% 
+  filter(row_number(year) == TRUE )
+
+# Difference:
+irrigation_t %>%
+  group_by(region) %>% 
+  summarise(diff = value[year == 2007] - value[year == 1980]) %>% 
+  arrange(-diff) %>% 
+  slice(1:2)
+
+
