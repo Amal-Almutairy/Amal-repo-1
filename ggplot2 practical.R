@@ -7,6 +7,8 @@ library(ggplot2) #part of the tidyverse library(tidyverse)
 library(RColorBrewer)
 library(dplyr)
 library(tidyverse)
+library(tinytex)
+
 
 # Using color:
 # Hex codes - 6 alpha-numeric digits long
@@ -44,6 +46,10 @@ munsell::plot_hex(myBlues)
 # Built-in data set:
 iris
 class(iris)
+nrow(Vocab)
+
+Vocab
+
 
 # Plot Sepal Width vs Sepal Length (y vs x, y ~ x)
 # 1 - Basic scatter plot with color
@@ -122,36 +128,83 @@ g +
   scale_color_brewer("Iris Species", palette = "Dark2") +
   theme(legend.position = c(0.1, 0.9))
 
+scale_color_brewer("Iris Species", palette = "Dark2")
 
 # How to set the colors manually?
-myCol <- brewer.pal(9, Dark2)
+myCol <- brewer.pal(3, "Dark2")
 
 g +
   geom_point(position = posn_j, shape = 1) +
   geom_smooth(method = "lm", se = FALSE) +
-  scale_color_brewer("Species", values = myCol) +
+  scale_colour_manual("Species", values = myCol) +
   theme(legend.position = c(0.1, 0.9))
 
-# As a nAMED charecter vector 
+# As a NAMED character vector 
 myCol2 <- c(Setosa = "#000000",
             virginica = "#E69F00",
             versiclor = "#56B4E9")
 
+munsell::plot_hex("#cb181d")
 
 # 6 - Remove non-data ink
-
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point(position = posn_j, shape = 16, alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#cb181d") +
+  coord_cartesian(xlim = c(4,8), ylim = c(2,5), expand = 0, clip = "off") +
+  facet_grid(. ~ Species)
 
 
 # 7 - Relabel the axes, add a title or caption
-# 8 - Change the aspect ratio
-# 9 - Set limits on the x and y axes
-# 10 - Extra, remove color and use facets instead
-
-
-
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point(position = posn_j, shape = 16, alpha = 0.6) +
-  geom_smooth(method = "lm", se = FALSE, color = "cb181d") +
+  geom_smooth(method = "lm", se = FALSE, color = "#cb181d") +
+  coord_cartesian(xlim = c(4,8), ylim = c(2,5), expand = 0, clip = "off") +
+  facet_grid(. ~ Species) +
+  labs(title = "The iris data set, again!",
+       caption = "Andreson,1931",
+       x = "Sepal Length (cm)",
+       y = "Sepal Width (cm)",
+       color = "")
+
+
+# 8 - Change the aspect ratio
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point(position = posn_j, shape = 16, alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#cb181d") +
+  coord_cartesian(xlim = c(4,8), ylim = c(2,5), expand = 0, clip = "off") +
+  facet_grid(. ~ Species) +
+  labs(title = "The iris data set, again!",
+       caption = "Andreson,1931",
+       x = "Sepal Length (cm)",
+       y = "Sepal Width (cm)",
+       color = "") +
+  theme_classic(10) +
+  theme(legend.position = c(0.2, 0.9),
+        aspect.ratio = 1)
+
+
+
+# 9 - Set limits on the x and y axes
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point(position = posn_j, shape = 16, alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#cb181d") +
+  coord_cartesian(xlim = c(4,8), ylim = c(2,5), expand = 0, clip = "off") +
+  facet_grid(. ~ Species) +
+  labs(title = "The iris data set, again!",
+       caption = "Andreson,1931",
+       x = "Sepal Length (cm)",
+       y = "Sepal Width (cm)",
+       color = "") +
+  theme_classic(10) +
+  theme(legend.position = c(0.2, 0.9),
+        aspect.ratio = 1,
+        axis.line = element_blank())
+
+
+# 10 - Extra, remove color and use facets instead
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point(position = posn_j, shape = 16, alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#cb181d") +
   coord_cartesian(xlim = c(4,8), ylim = c(2,5), expand = 0, clip = "off") +
   facet_grid(. ~ Species) +
   labs(title = "The iris data set, again!",
@@ -166,34 +219,156 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
 
 
 
-# Another data set -----
 
-msleep2
-
+# Another data set ----
 msleep2 <- msleep %>% 
   select(vore, sleep_total) %>% 
   na.omit()
 
-msleep2 
+msleep2
 
-# Basic histogram
+# Basis histogram
 ggplot(msleep2, aes(sleep_total)) +
   geom_histogram()
 
+# ggplot2's idea of a dot plot:
+ggplot(msleep2, aes(sleep_total)) +
+  geom_dotplot()
 
 # a) "Dot" plot
-ggplot(dataset, aes(x = vore, y= sleep_total, color = vore)) +
-  geom_point(position = position_jitter(width = 0.2, seed = 136),
-             shape = 16, alpha = 0.65)
+ggplot(msleep2, aes(x = vore, y = sleep_total, color = vore)) +
+  geom_dotplot(position = position_jitter(width = 0.2, seed = 136), 
+               shape = 16, alpha = 0.65) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_y_continuous(limits = c(0,24),
+                     breaks = seq(0, 24, 6),
+                     expand = c(0,0)) +
+  scale_x_discrete(labels = c("Carnivore",
+                              "Herbivore",
+                              "Insectivore",
+                              "Omnivore")) +
+  labs(title = "a) Dot Plot",
+       x = "Eating Habits",
+       y = "Total Sleep Time (h)") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") +
+  NULL
+
+# The Insectivores are represented by only 5 specimens (very low n)
+# If anything we can say that this distribution looks bimodal, but we need more observations.
+
+# The Omnivores seem to have a positively skewed distribution
 
 
-# Density plot:
+# How about a density plot:
 ggplot(msleep2, aes(sleep_total, color = vore)) +
-  geom_density()
+  geom_density(vore)
+
+# b) "Dot" plot with mean and sd
+ggplot(msleep2, aes(x = vore,
+                    y = sleep_total,
+                    color = vore,
+                    fill = vore)) +
+  geom_dotplot() 
+
+ggplot(msleep2, aes(sleep_total)) +
+  geom_dotplot(msleep2, aes(x = vore,
+                            y = sleep_total,
+                            color = vore,
+                            fill = vore)) +
+  geom_col() +
+  scale_y_continuous(limits = c(0,24),
+                     breaks = seq(0, 24, 6),
+                     expand = c(0,0)) +
+  scale_x_discrete(labels = c("Carnivore",
+                              "Herbivore",
+                              "Insectivore",
+                              "Omnivore")) +
+  labs(title = "b) Dot plot",
+       x = "Eating Habits",
+       y = "Total Sleep Time (h)") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") +
+  NULL
+
+
+# c) Just the mean and the sd
+
+# d) Bar (aka "Dynamite") plot
+ggplot(msleep2, aes(x = vore,
+                    y = sleep_total,
+                    color = vore,
+                    fill = vore)) +
+  geom_col() +
+  scale_y_continuous(limits = c(0,24),
+                     breaks = seq(0, 24, 6),
+                     expand = c(0,0)) +
+  scale_x_discrete(labels = c("Carnivore",
+                              "Herbivore",
+                              "Insectivore",
+                              "Omnivore")) +
+  labs(title = "d) Bar plot",
+       x = "Eating Habits",
+       y = "Total Sleep Time (h)") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") +
+  NULL
 
 
 
-# Setosa
-setosa_lm <- lm(Sepal.Width ~ Sepal.Length, data = iris[iris$Species =="setosa",])
+# e) Box plot
+ggplot(msleep2, aes(x = vore,
+                    y = sleep_total,
+                    color = vore,
+                    fill = vore)) +
+  geom_boxplot() +
+  scale_y_continuous(limits = c(0,24),
+                     breaks = seq(0, 24, 6),
+                     expand = c(0,0)) +
+  scale_x_discrete(labels = c("Carnivore",
+                              "Herbivore",
+                              "Insectivore",
+                              "Omnivore")) +
+  labs(title = "e) Box plot",
+       x = "Eating Habits",
+       y = "Total Sleep Time (h)") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") +
+  NULL
+
+
+# f) Violin plot
+ggplot(msleep2, aes(x = vore,
+                    y = sleep_total,
+                    color = vore,
+                    fill = vore)) +
+  geom_violin() +
+  scale_y_continuous(limits = c(0,24),
+                     breaks = seq(0, 24, 6),
+                     expand = c(0,0)) +
+  scale_x_discrete(labels = c("Carnivore",
+                              "Herbivore",
+                              "Insectivore",
+                              "Omnivore")) +
+  labs(title = "f) Violin plot",
+       x = "Eating Habits",
+       y = "Total Sleep Time (h)") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") +
+  NULL
+
+
+
+# What are diagnostic plots?
+# Plots that are used to confirm or check 
+# assumptions and results of models and/or statistics
+setosa_lm <- lm(Sepal.Width ~ Sepal.Length, data = iris[iris$Species == "setosa",])
 plot(setosa_lm)
+
+
 
