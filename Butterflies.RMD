@@ -12,17 +12,16 @@ library(tidyverse)
 ```
 
 
-
 ## Butterflies:
 ```{r}
-# Butterflies in a table:
-as_tibble(Butterflies)
+
+butterflies <- read_csv("Butterflies.csv") 
 
 ```
 
-## Standard Devation, Mean and Summary of the wingspan
+## Descriptive statistics
 
-
+Wingspan: Standard Deviation, Mean and Summary
 
 ```{r pressure, echo=FALSE}
 sd(Butterflies$wingspan, na.rm = TRUE) # is 1.565508
@@ -30,9 +29,7 @@ mean(Butterflies$wingspan, na.rm = TRUE) # is 5.365
 summary(Butterflies$wingspan)
 ```
 
-
-
-## Standard Devation, Mean and Summary of the Speed
+Speed
 
 ```{r}
 sd(Butterflies$Speed, na.rm = TRUE) # is 4.186759
@@ -40,59 +37,52 @@ mean(Butterflies$Speed, na.rm = TRUE) # is 15.65
 summary(Butterflies$Speed)
 ```
 
-## # Normal Probabilities for the area below
 
+## Influencers of Speed
 
-```{r}
-# Normal Probabilities for the area below
-pnorm(1.5) # is 0.9331928
+What are the greatest influencers of a butterfly's speed?
 
-```
-## Normal Probabilities for the area above
+Does wingspan influenct speed?
 
 ```{r}
-# Normal Probabilities for the area above
-1 - pnorm(1.5) # is 0.0668072
-```
-## Normal Probabilities for the area middle
-
-```{r}
-# Normal Probabilities for the area middle
-pnorm(1.5) - pnorm(-1.4) # is 0.8524361
-```
-
-
-
-```{r}
-mu <- 5.3
-sigma <- 1.5
-```
-
-## the base layer
-```{r}
-# the base layer
-Butterflies %>% 
-  select(wingspan, Speed) %>% 
-  na.omit()
-
-
-Butterflies2 <- Butterflies %>% 
-  select(wingspan, Speed) %>% 
-  na.omit()
-
+ggplot(butterflies, aes(x = wingspan, y = Speed))  +
+  geom_point() +
+  geom_smooth(se = FALSE, method ="lm")
 
 ```
 
+Describe this quantitatively? i.e. 
+
+- What is the model? 
+- Is it significant? 
+- Is the model appropriate for the data? 
+- Can you define a different model?
+
+The other continuous variable would be weight?
+
 ```{r}
-Butterflies2 <- ggplot(iris, aes(x = Speed, y = wingspan, color = Butterflies)) 
+ggplot(butterflies, aes(x = Weight, y = Speed))  +
+  geom_point() +
+  geom_smooth(se = FALSE, method ="lm")
 
 ```
+
+Is there a combinatorial effect of weight and wingspan on the speed of a butterfly?
+
+```{r}
+ggplot(butterflies, aes(x = wingspan, y = Weight))  +
+  geom_point() +
+  geom_smooth(se = FALSE, method ="lm")
+
+```
+So weight and wingspan are "co-linear" so it's not surprising that weight doens't predict speed, since wingspan, we already doesn't. 
+
 
 ## Inferential Statistics
 ```{r}
 
 # Inferential Statistics
-Butterflies_lm <- lm(wingspan ~ Butterfly_N , data =  Butterflies)
+Butterflies_lm <- lm(wingspan ~ Butterfly_N , data =  butterflies)
 
 Butterflies_lm %>% 
   anova(Butterflies_lm)

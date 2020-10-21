@@ -1,18 +1,17 @@
 # Butterflies analysis
 # Amal Almutairy
 # 14.10.2020
+
+# Data source: ??
+
 # Small case study to analyze 4 different kinds of Butterflies in the world
+
 library(tidyverse)
 library(DT)
-library(ggplot2) 
-library(RColorBrewer)
-library(dplyr)
 
 
 # Read Butterflies data:
-Butterflies <- read.csv("~/DataProject/Misk-Amal-2020/Butterflies.csv") 
-
-
+Butterflies <- read.csv("Butterflies.csv") 
 
 # In a Garden I saw 4 spices of butterflies, which were:
 # A Milbert
