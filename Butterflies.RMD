@@ -1,0 +1,104 @@
+---
+title: "Butterflies"
+author: "Amal Almutairy"
+date: "10/21/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+
+
+## Butterflies:
+```{r}
+# Butterflies in a table:
+as_tibble(Butterflies)
+
+```
+
+## Standard Devation, Mean and Summary of the wingspan
+
+
+
+```{r pressure, echo=FALSE}
+sd(Butterflies$wingspan, na.rm = TRUE) # is 1.565508
+mean(Butterflies$wingspan, na.rm = TRUE) # is 5.365
+summary(Butterflies$wingspan)
+```
+
+
+
+## Standard Devation, Mean and Summary of the Speed
+
+```{r}
+sd(Butterflies$Speed, na.rm = TRUE) # is 4.186759
+mean(Butterflies$Speed, na.rm = TRUE) # is 15.65
+summary(Butterflies$Speed)
+```
+
+## # Normal Probabilities for the area below
+
+
+```{r}
+# Normal Probabilities for the area below
+pnorm(1.5) # is 0.9331928
+
+```
+## Normal Probabilities for the area above
+
+```{r}
+# Normal Probabilities for the area above
+1 - pnorm(1.5) # is 0.0668072
+```
+## Normal Probabilities for the area middle
+
+```{r}
+# Normal Probabilities for the area middle
+pnorm(1.5) - pnorm(-1.4) # is 0.8524361
+```
+
+
+
+```{r}
+mu <- 5.3
+sigma <- 1.5
+```
+
+## the base layer
+```{r}
+# the base layer
+Butterflies %>% 
+  select(wingspan, Speed) %>% 
+  na.omit()
+
+
+Butterflies2 <- Butterflies %>% 
+  select(wingspan, Speed) %>% 
+  na.omit()
+
+
+```
+
+```{r}
+Butterflies2 <- ggplot(iris, aes(x = Speed, y = wingspan, color = Butterflies)) 
+
+```
+
+## Inferential Statistics
+```{r}
+
+# Inferential Statistics
+Butterflies_lm <- lm(wingspan ~ Butterfly_N , data =  Butterflies)
+
+Butterflies_lm %>% 
+  anova(Butterflies_lm)
+
+
+```
+
+
+

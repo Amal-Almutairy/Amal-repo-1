@@ -1,27 +1,21 @@
-﻿Site,Butterfly_N,Number,wingspan,Origin,Color,,,,,,,
-Site I,Zebra ,25,5,Canada,Black&white,,,,,,,
-Site I,Milbert,120,4.2,Mexico,Red,,,,,,,
-Site I,Julia,35,4,America ,Blue,,,,,,,
-Site I,Monarch ,120,8.6,America ,Orange,,,,,,,
-Site II,Zebra ,20,5,Canada,Black&white,,,,,,,
-Site II,Milbert,155,4.2,Mexico,Red,,,,,,,
-Site II,Julia,45,4,America ,Blue,,,,,,,
-Site II,Monarch ,80,8.6,America ,Orange,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
+﻿Site,Butterfly_N,wingspan,Speed,Weight ,Origin,Color
+Site I,Zebra ,5.8,12,0.54,Canada,Black&white
+Site I,Milbert,4.2,12.5,0.36,Mexico,Red
+Site I,Julia,4,13,0.34,America ,Blue
+Site I,Monarch ,7.6,14,0.65,America ,Orange
+Site I,Zebra ,6,12.5,0.59,Canada,Black&white
+Site I,Milbert,4.2,16,0.36,Mexico,Red
+Site I,Julia,4,12,0.34,America ,Blue
+Site I,Monarch ,8,20,0.69,America ,Orange
+Site I,Zebra ,5.2,12.5,0.51,Canada,Black&white
+Site I,Milbert,4.2,21,0.36,Mexico,Red
+Site II,Julia,4.2,12.5,0.36,America ,Blue
+Site II,Monarch ,8.6,14.5,0.75,America ,Orange
+Site II,Zebra ,4.8,25,0.41,Canada,Black&white
+Site II,Zebra ,5.5,15,0.52,Canada,Black&white
+Site II,Milbert,4.2,20,0.36,Mexico,Red
+Site II,Julia,4.5,14,0.44,America ,Blue
+Site II,Monarch ,8.4,12,0.73,America ,Orange
+Site II,Zebra ,5.5,24,0.52,Canada,Black&white
+Site II,Milbert,4.2,18,0.36,Mexico,Red
+Site II,Julia,4.2,12.5,0.36,America ,Blue
