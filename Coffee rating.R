@@ -31,7 +31,7 @@ summary(Arabica_data_cleaned)
 
 
 
-
 # arrange by region
+
 
 

@@ -4,13 +4,10 @@
 # Small case study to analyze 4 different kinds of Butterflies in the world
 library(tidyverse)
 library(DT)
-library(ggplot2) 
-library(RColorBrewer)
-library(dplyr)
 
 
 # Read Butterflies data:
-Butterflies <- read.csv("~/DataProject/Misk-Amal-2020/Butterflies.csv") 
+Butterflies <- read.csv("Butterflies.csv") 
 
 
 
