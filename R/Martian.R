@@ -7,7 +7,7 @@
 library(tidyverse)
 
 # Read in the data
-martian <- read_csv("R/Martians.csv")
+martian <- read_csv("Martians.csv")
 
 
 # Descriptive statistics 
