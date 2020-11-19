@@ -1,0 +1,118 @@
+---
+title: "Martions"
+author: "Amal Almutairy"
+date: "11/19/2020"
+output:
+  html_document:
+    theme: journal
+    highlight: tango
+    toc: yes
+    toc_depth: 4
+    toc_float:
+      collapsed: no
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+
+```{r}
+
+library(tidyverse)
+library(modeldata)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+# Read in the data
+martian <- read_csv("Martians.csv")
+```
+
+
+## Martian descriptive statistics 
+```{r}
+# Descriptive statistics 
+martian %>%
+  group_by(Site)
+```
+## Data
+
+```{r}
+# Calculating data 
+martian %>%
+  group_by(Site =1)
+```
+## Group by the hight to get the avarage of the mean:
+
+```{r}
+# Group by the hight to get the avarage of the mean:
+martian %>%
+  group_by(Height)
+```
+## The mean 
+```{r}
+# Mean 
+martian %>%
+  group_by(Site =1) %>% 
+  summarise(avg = mean(Height))
+
+```
+```{r}
+            
+site1 <- filter(martian, martian$Site == "Site I")
+martianSum <- sum(site1$Height)
+mean <- martianSum/nrow(martian)
+
+```
+
+## Variance
+```{r}
+# Variance
+var(martian)
+```
+
+## Martian in site 1:
+```{r}
+# Martian in site 1:
+ martian %>% 
+   group_by("Site" = "Site I")
+
+```
+## Martian in site 2:
+```{r}
+# Martian in site 2:
+ martian %>% 
+   group_by(Site = "Site II")
+```
+## Martian height
+```{r}
+martian %>% 
+  group_by("Height") %>% 
+  slice(2:11)
+
+```
+```{r}
+
+# This way will give a 1-element long vector:
+martian_siteI <- martian$Height [martian$Site == "Site I"]
+siteI_mean <- sum(martian_siteI)/length(martian_siteI)
+
+```
+
+
+## The variance and standard deviation:
+```{r}
+# Variance
+siteI_var <- sum((martian_siteI - siteI_mean)^2)/(length(martian_siteI) - 1)
+
+var(martian_siteI)
+
+# Standard deviation
+siteI_sd <- sqrt(siteI_var)
+
+# Standard deviation in (martian_siteI)
+sd(martian_siteI)
+```
+
+

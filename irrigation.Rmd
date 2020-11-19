@@ -1,0 +1,127 @@
+---
+title: "Irrigation"
+author: "Amal Almutairy"
+date: "11/19/2020"
+output:
+  html_document:
+    theme: journal
+    highlight: kate
+    toc: yes
+    toc_depth: 4
+    toc_float:
+      collapsed: no
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+```{r}
+library(tidyverse)
+library(modeldata)
+library(ggplot2)
+library(dplyr)
+```
+
+## Irrigation wide
+```{r}
+irrigation_w <- read.csv("irrigation_wide.csv") 
+irrigation_w 
+```
+
+
+## Irrigation long
+```{r}
+irrigation_l <- read.csv("irrigation_long.csv") 
+irrigation_l 
+```
+## Examine the irrigation data
+```{r}
+# Examine the data:
+ str(irrigation_w)
+ summary(irrigation_w)
+ mutate(irrigation_w)
+ 
+ # Examine the data:
+ str(irrigation_l)
+ summary(irrigation_l)
+ mutate(irrigation_l)
+```
+## In 2007 what the total area under irrigation?
+```{r}
+# In 2007 what the total area under irrigation?
+ irrigation_w %>% 
+   filter(year == 2007) %>% 
+ select(`N..America`,`S..America`) %>% 
+   sum()
+```
+
+```{r}
+#for only the Americas
+irrigation_w %>% 
+   filter(year == 2007) %>% 
+   select(ends_with("erica"))
+
+```
+```{r}
+# Tidy Data
+irrigation_t <- irrigation_w %>%
+  pivot_longer(-year, names_to = "region", values_to = "value")
+  irrigation_t
+```
+```{r}
+# arrange from highest to lowest use "_"
+  irrigation_t %>%
+  group_by(region) %>% 
+  summarise(diff = value[year == 2007] - value[year == 1980]) %>% 
+  arrange(-diff) %>% 
+  slice(1:2)
+
+```
+
+```{r}
+# standardizes area against 1980(relative change over 1980)
+ irrigation_t %>% 
+  group_by(year) %>% 
+mutate(total_ = sum(value)) %>% 
+  select(year, total_) %>% 
+  transmute(total_1 = total_ / 62)
+```
+
+```{r}
+
+# where is it ?the highest and lowest?
+irrigation_t[which.max(irrigation_t$rate),]
+irrigation_t[which.min(irrigation_t$rate),]
+
+```
+```{r}
+
+# standardizes area against 1980(relative change over 1980)
+ irrigation_t %>% 
+  group_by(year) %>% 
+mutate(total_ = sum(value)) %>% 
+  select(year, total_) %>% 
+  transmute(total_1 = total_ / 62)
+```
+
+
+```{r}
+
+# Keep all values:
+irrigation_t %>%
+  group_by(year) %>% 
+  mutate(total_ = sum(value))%>% 
+  select(year, total_) %>% 
+  filter(row_number(year) == TRUE )
+
+# Difference:
+irrigation_t %>%
+  group_by(region) %>% 
+  summarise(diff = value[year == 2007] - value[year == 1980]) %>% 
+  arrange(-diff) %>% 
+  slice(1:2)
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

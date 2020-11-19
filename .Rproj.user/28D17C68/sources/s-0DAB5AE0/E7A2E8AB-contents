@@ -35,7 +35,7 @@ martiansSum <- sum(Site1$Height)
 mean <- martiansSum/nrow(martians)
 
 # Variance
-Var
+var(martian)
 
 
  
@@ -59,12 +59,10 @@ martian %>%
   group_by("Height") %>% 
   slice(2:11)
 
-# but this is a data frame:
-siteI_mean$avg
-
 # This way will give a 1-element long vector:
-martian_siteI <- martian$Height [martian$Site -- "Site I"]
+martian_siteI <- martian$Height [martian$Site == "Site I"]
 siteI_mean <- sum(martian_siteI)/length(martian_siteI)
+
 
 # mean(martian_SiteI)
 # Variance
